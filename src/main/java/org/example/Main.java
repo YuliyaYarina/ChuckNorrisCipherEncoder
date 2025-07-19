@@ -6,7 +6,9 @@ public class Main {
         System.out.println("Input String:");
         Scanner scan = new Scanner(System.in);
         String str = scan.nextLine();
-        str = str.replaceAll("", " ");
-        System.out.println(str);
+
+        for (int i = 0; i < str.length(); i++) {
+            System.out.printf("%c = %7s", str.charAt(i), String.format("%7s", Integer.toBinaryString(str.charAt(i))).replace(' ', '0'));
+        }
     }
 }
