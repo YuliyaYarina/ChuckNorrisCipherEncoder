@@ -38,7 +38,7 @@ public class Main {
     /**
      * Проверяет, является ли строка ввода допустимой.
      * @param inputString строка ввода
-     * @возвращает значение true, если строка ввода допустима, в противном случае значение false
+     * @return  значение true, если строка ввода допустима, в противном случае значение false
      */
     public static boolean isValidInput(String inputString) {
         return inputString.matches("[ 0]*");
