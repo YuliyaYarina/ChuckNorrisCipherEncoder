@@ -1,47 +1,55 @@
 package org.example;
 import java.util.Scanner;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("Input String:");
-        String inputString = readInputStringFromUser();
-        String binaryString = convertStringToBinary(inputString);
-        System.out.println(encodeStringUsingChuckNorrisMethod(binaryString));
+        String inputString = Main.readInputStringFromUser();
+        Main.processInputString(inputString, Main::checkingStringUsingChuckNorrisMethod);
     }
 
+    /**
+     * Считывает строку ввода от пользователя.
+     * @return строку ввода
+     */
     public static String readInputStringFromUser() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
 
-    public static String convertStringToBinary(String inputString) {
-        StringBuilder binaryString = new StringBuilder();
-        for( char c : inputString.toCharArray()) {
-            binaryString.append(String.format("%7s", Integer.toBinaryString(c)).replace(' ', '0'));
+    /**
+     * Проверяет строку, используя метод Чака Норриса.
+     * @param inputString строка ввода
+     */
+    public static void checkingStringUsingChuckNorrisMethod(String inputString) {
+        Predicate<String> isValidInput = Main::isValidInput;
+        Consumer<String> startsTheTextDecryptorProcess = TextDecryptionService::decryptText;
+        Consumer<String> startsTheTextEncryptorProcess = TextEncryptionService::decryptText;
+
+        if (isValidInput.test(inputString)) {
+            startsTheTextDecryptorProcess.accept(inputString);
+        } else {
+            startsTheTextEncryptorProcess.accept(inputString);
         }
-        return binaryString.toString();
     }
 
-    public static String encodeStringUsingChuckNorrisMethod(String binaryString) {
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < binaryString.length(); ) {
-            char currentChar = binaryString.charAt(i);
-            int count = 1;
-            while (i + 1 < binaryString.length() && binaryString.charAt(i + 1) == currentChar) {
-                i++;
-                count++;
-            }
-            result.append(currentChar == '1' ? "0 " : "00 ").append(getRepeatedZeros(count)).append(" ");
-            i++;
-        }
-        return "The result: " + result.toString().trim();
+    /**
+     * Проверяет, является ли строка ввода допустимой.
+     * @param inputString строка ввода
+     * @возвращает значение true, если строка ввода допустима, в противном случае значение false
+     */
+    public static boolean isValidInput(String inputString) {
+        return inputString.matches("[ 0]*");
     }
 
-    public static String getRepeatedZeros(int count) {
-        StringBuilder zeros = new StringBuilder();
-        for (int i = 0; i < count; i++) {
-            zeros.append("0");
-        }
-        return zeros.toString();
+    /**
+     * Обрабатывает входную строку.
+     * @param inputString входная строка
+     * @param consumer потребитель
+     */
+    public static void processInputString(String inputString, Consumer<String> consumer) {
+        consumer.accept(inputString);
     }
 }
