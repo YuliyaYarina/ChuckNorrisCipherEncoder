@@ -1,16 +1,18 @@
 package org.example;
 
+/**
+ * Содержит методы шифрования текста с использованием алгоритма шифрования Чака Норриса.
+ */
 public class TextEncryptionService {
 
     /**
      * Шифрует текст.
      * @param inputString строка ввода
+     * @return зашифрованный текст
      */
-    public static void decryptText(String inputString) {
-        System.out.println("The result: " );
-        String binaryString = convertStringToBinary(inputString);
-        String encryptedString = encryptString(binaryString);
-        System.out.println(encryptedString);
+    public static String encryptText(String inputString) {
+        String binaryString = convertToBinary(inputString);
+        return encryptString(binaryString);
     }
 
     /**
@@ -18,7 +20,7 @@ public class TextEncryptionService {
      * @param inputString входная строка
      * @return  двоичную строку
      */
-    public static String convertStringToBinary(String inputString) {
+    public static String convertToBinary(String inputString) {
         StringBuilder binaryString = new StringBuilder();
         for( char c : inputString.toCharArray()) {
             binaryString.append(String.format("%7s", Integer.toBinaryString(c)).replace(' ', '0'));
@@ -27,7 +29,7 @@ public class TextEncryptionService {
     }
 
     /**
-     * Шифрует двоичную строку.
+     * Шифрует заданную двоичную строку, используя алгоритм шифрования Чака Норриса.
      * @param binaryString двоичная строка
      * @return зашифрованную строку
      */

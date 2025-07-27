@@ -1,25 +1,32 @@
 package org.example;
 
+/**
+ * Предоставляет методы расшифровки текста с использованием алгоритма шифрования Чака Норриса.
+ */
 public class TextDecryptionService {
 
     /**
-     * Расшифровывает текст.
-     * @param unary Унарная строка.
+     * Расшифровывает заданный текст, используя алгоритм шифрования Чака Норриса.
+     * @param unary текст для расшифровки
+     * @return расшифрованный текст
      */
-    public static void decryptText(String unary) {
-        System.out.println("The result: " );
-        String[] binaryStrings = convertUnaryToBinary(unary).split("(?<=\\G.{7})");;
-        convertBinaryToSting(binaryStrings);
+    public static String decryptText(String unary) {
+        String binaryStrings = convertUnaryToBinary(unary);
+        return convertToText(binaryStrings);
     }
 
     /**
      * Преобразует двоичные строки в текст.
-     * @param binaryStrings двоичные строки.
+     * @param binaryString двоичные строки.
      */
-    public static void convertBinaryToSting(String[] binaryStrings) {
-        for (String binaryString : binaryStrings) {
-            System.out.print((char) Integer.parseInt(binaryString, 2));
+    public static String convertToText(String binaryString) {
+        StringBuilder text = new StringBuilder();
+        for(int i = 0; i < binaryString.length(); i += 7){
+            String binaryChar = binaryString.substring(i, i + 7);
+            char c = (char) Integer.parseInt(binaryChar, 2);
+            text.append(c);
         }
+        return text.toString();
     }
 
 /**
